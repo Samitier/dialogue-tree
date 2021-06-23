@@ -25,15 +25,28 @@ import {
   reactive
 } from 'vue'
 import { DialogueTree } from '../parse-dialogue-tree/dialogue-tree.model'
+import { Oscillator } from '../oscillator/oscillator'
 
-const textVelocity = 15
+const textVelocity = 20
 const maxChars = 110
+
+type AudioOptions = {
+  character: string
+  frequency: number
+  type: 'sine' | 'triangle'
+}[]
 
 export default defineComponent({
   props: {
     dialogueTree: {
       type: Object as PropType<DialogueTree>,
       required: true
+    },
+    audioOptions: {
+      type: Object as PropType<AudioOptions>,
+      default() {
+        return [] as AudioOptions
+      }
     }
   },
   setup(props) {
@@ -42,11 +55,17 @@ export default defineComponent({
       currentCharacterLineIndex: 0,
       charCount: 0,
       lineCount: 0,
-      interval: 0
+      interval: 0,
+      oscillator: new Oscillator()
     })
 
     const currentNode = computed(() =>
-      props.dialogueTree.find((d) => d.id === state.currentDialogueNodeId)
+      // Fixme: vue breaks when typing props
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (props as any).dialogueTree.find(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (d: any) => d.id === state.currentDialogueNodeId
+      )
     )
 
     const currentCharacterLine = computed(
@@ -85,9 +104,24 @@ export default defineComponent({
       return state.charCount >= splittedLines.value[state.lineCount].length
     })
 
+    const currentCharacterAudioOptions = computed(() => {
+      if (!currentCharacter.value) return
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return (props as any).audioOptions.find(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (a: any) => a.character.toLowerCase() === currentCharacter.value
+      )
+    })
+
     onMounted(() => {
       state.interval = setInterval(() => {
-        if (!hasFinishedScrolling.value) state.charCount++
+        if (state.oscillator.isPlaying) state.oscillator.stop()
+        if (!hasFinishedScrolling.value) {
+          state.charCount++
+          if (state.charCount % 3) {
+            state.oscillator.start(currentCharacterAudioOptions.value)
+          }
+        }
       }, textVelocity)
     })
     onUnmounted(() => clearInterval(state.interval))
@@ -169,7 +203,7 @@ export default defineComponent({
   bottom: 0.6rem;
   width: 0.8rem;
   height: 0.5rem;
-  animation: oscilate 0.8s alternate infinite;
+  animation: oscilate 0.4s alternate infinite;
 }
 
 @keyframes oscilate {

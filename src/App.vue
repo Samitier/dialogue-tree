@@ -3,6 +3,10 @@
     <dialogue-box
       v-if="dialogueTree.length"
       :dialogue-tree="dialogueTree"
+      :audio-options="[
+        { character: 'VINCENT', frequency: 450, type: 'sine' },
+        { character: 'JULES', frequency: 300, type: 'triangle' }
+      ]"
     />
   </div>
 </template>
@@ -59,5 +63,7 @@ body,
   max-width: 45rem;
   max-height: 30rem;
   border: 1px solid gray;
+  background-image: url('/pxArt.png');
+  background-size: contain;
 }
 </style>
