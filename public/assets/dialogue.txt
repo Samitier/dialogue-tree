@@ -1,0 +1,39 @@
+NARRATOR
+  Hello there. This is an example conversation. Let's see how we render this thing. And I talk a lot a lot
+
+BEN
+  Hello, I am Ben. Glad to meet you. Are you feeling fine?
+
+YOU
+  - Yes [FEELING WELL]
+  - Not quite... [NOT FEELING WELL]
+
+[FEELING WELL]
+
+BEN
+  Nice! That's a relief... [SAY GOODBYE]
+
+[NOT FEELING WELL]
+
+BEN
+  Oops... I'm sorry to hear that... What's wrong?
+
+YOU
+  - I feel a bit sick. [LIFE GONA BE GOOD]
+  - I feel heartbroken. [LIFE GONA BE GOOD]
+  - I am too lazy. [LIFE GONA BE GOOD]
+
+[LIFE GONA BE GOOD]
+
+BEN:
+  Well, you know what they say... 
+  Life is always going to be good for those who are nice.
+  
+  And you are nice. [SAY GOODBYE]
+
+[SAY GOODBYE]
+
+BEN:
+  Well I don't want to make you lose more time.
+  Go on!
+
