@@ -1,6 +1,6 @@
 <template>
   <div class="dialogue">
-    <div v-if="currentCharacter" class="character-name">
+    <div class="character-name">
       {{ currentCharacter }}
     </div>
     <div class="dialogue-box" @click="onNextLine">
@@ -135,6 +135,7 @@ export default defineComponent({
   padding: 0.4rem 2rem;
   line-height: 1.5;
   height: 4rem;
+  cursor: pointer;
 }
 
 .character-name {

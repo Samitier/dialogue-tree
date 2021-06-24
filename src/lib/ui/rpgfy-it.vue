@@ -1,12 +1,12 @@
 <template>
   <div class="container">
     <pixelized-background />
-    <dialogue-box />
+    <dialogue-box v-if="hasLines" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, PropType } from 'vue'
+import { computed, defineComponent, onMounted, PropType } from 'vue'
 import DialogueBox from './dialogue-box.vue'
 import PixelizedBackground from './pixelized-background.vue'
 import { parseDialogueTree } from '../parse-dialogue-tree/parse-dialogue-tree'
@@ -37,6 +37,9 @@ export default defineComponent({
       store.commit(Mutations.addAudioOptions, props.audioOptions)
       store.commit(Mutations.addDialogueTree, parseDialogueTree(text))
     })
+
+    const hasLines = computed(() => !!store.getters.currentCharacterLines)
+    return { hasLines }
   }
 })
 </script>
@@ -47,7 +50,8 @@ export default defineComponent({
   position: relative;
   width: 45rem;
   height: 30rem;
-  border: 1px solid gray;
+  border: 5px solid black;
+  border-radius: 5px;
 }
 
 @media (max-width: 45rem) {

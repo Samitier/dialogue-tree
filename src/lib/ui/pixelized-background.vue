@@ -14,9 +14,8 @@
 import { computed, defineComponent } from '@vue/runtime-core'
 import { ref } from 'vue'
 import { useStore } from 'vuex'
-import { Pixelit } from '../pixelit/pixelit'
+import { pixelizeImage } from '../pixelize-image/pixelize-image'
 import { Store } from '../store'
-import { palette } from '../pixelit/palette'
 
 export default defineComponent({
   setup() {
@@ -32,15 +31,11 @@ export default defineComponent({
     })
 
     function onLoadImage() {
-      const pixelit = new Pixelit({
+      pixelizeImage({
         to: canvas.value,
         from: image.value,
-        palette,
-        scale: 35
+        pixels: 35
       })
-      pixelit.draw()
-      pixelit.pixelate()
-      pixelit.convertPalette()
     }
 
     return { canvas, image, onLoadImage, currentImageSrc }

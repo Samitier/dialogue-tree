@@ -35,5 +35,6 @@ body,
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #49757a;
 }
 </style>
