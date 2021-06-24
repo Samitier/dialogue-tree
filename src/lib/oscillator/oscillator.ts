@@ -22,7 +22,7 @@ export class Oscillator {
     this.oscillator.type = type
     this.isPlaying = true
     this.gain.gain.linearRampToValueAtTime(
-      0.8,
+      0.5,
       this.context.currentTime + 0.01
     )
   }

@@ -2,7 +2,7 @@
   <rpgfy-it
     script-file="dialogue2.txt"
     :audio-options="[
-      { character: 'VINCENT', frequency: 450, type: 'sine' },
+      { character: 'VINCENT', frequency: 400, type: 'sine' },
       { character: 'JULES', frequency: 300, type: 'triangle' }
     ]"
   />

@@ -81,7 +81,6 @@ export default defineComponent({
           state.charCount++
           if (state.charCount % 3) {
             const audioOptions = store.getters.currentCharacterAudioOptions
-            console.log(audioOptions)
             state.oscillator.start({
               frequency: audioOptions?.frequency,
               type: audioOptions?.type
