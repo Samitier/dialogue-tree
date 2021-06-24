@@ -1,19 +1,13 @@
 <template>
-  <rpgfy-it
-    script-file="dialogue2.txt"
-    :audio-options="[
-      { character: 'VINCENT', frequency: 400, type: 'sine' },
-      { character: 'JULES', frequency: 300, type: 'triangle' }
-    ]"
-  />
+  <pulp />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import RpgfyIt from './lib/ui/rpgfy-it.vue'
+import Pulp from './examples/pulp.vue'
 
 export default defineComponent({
-  components: { RpgfyIt }
+  components: { Pulp }
 })
 </script>
 
@@ -33,6 +27,7 @@ body,
 
 #app {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background: #49757a;

@@ -1,8 +1,8 @@
-import { AudioOption } from '../models/audio-options'
+import { CharacterParameters } from '../models/character-parameters'
 import { defaultNodeId, DialogueTree } from '../models/dialogue-tree'
 
 export const state = {
-  audioOptions: [] as AudioOption[],
+  characterParameters: [] as CharacterParameters[],
   dialogueTree: [] as DialogueTree,
   currentDialogueNodeId: defaultNodeId,
   currentCharacterLineIndex: 0

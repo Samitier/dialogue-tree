@@ -21,13 +21,11 @@ export default defineComponent({
   setup() {
     const canvas = ref<HTMLCanvasElement>()
     const image = ref<HTMLImageElement>()
-    const store = useStore<Store>()
+    const store: Store = useStore()
 
     const currentImageSrc = computed(() => {
-      const currentCharacter =
-        store.getters.currentCharacterLines?.character
-      if (currentCharacter === 'JULES') return '/example.jpeg'
-      else return '/example2.jpeg'
+      const images = store.getters.currentCharacterParameters?.portraits
+      if (images && images.length) return images[0]
     })
 
     function onLoadImage() {

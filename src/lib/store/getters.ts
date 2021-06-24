@@ -1,12 +1,12 @@
 import { GetterTree } from 'vuex'
-import { AudioOption } from '../models/audio-options'
+import { CharacterParameters } from '../models/character-parameters'
 import { CharacterLines, DialogueNode } from '../models/dialogue-tree'
 import { State } from './state'
 
 export type Getters = {
   currentDialogueNode: DialogueNode | undefined
   currentCharacterLines: CharacterLines | undefined
-  currentCharacterAudioOptions: AudioOption | undefined
+  currentCharacterParameters: CharacterParameters | undefined
 }
 
 export const getters: GetterTree<State, State> = {
@@ -20,8 +20,8 @@ export const getters: GetterTree<State, State> = {
       state.currentCharacterLineIndex
     ]
   },
-  currentCharacterAudioOptions(state, getters: Getters) {
-    return state.audioOptions.find(
+  currentCharacterParameters(state, getters: Getters) {
+    return state.characterParameters.find(
       (a) =>
         a.character.toLowerCase() ===
         getters.currentCharacterLines?.character.toLowerCase()

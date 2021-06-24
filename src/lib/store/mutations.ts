@@ -1,17 +1,21 @@
 import { MutationTree } from 'vuex'
 import { State } from './state'
-import { AudioOption } from '../models/audio-options'
 import { DialogueTree } from '../models/dialogue-tree'
+import { CharacterParameters } from '../models/character-parameters'
 
 export enum Mutations {
-  addAudioOptions = 'addAudioOptions',
+  addCharacterParameters = 'addCharacterParameters',
+  addCharacterPortraits = 'addCharacterPortraits',
   addDialogueTree = 'addDialogueTree',
   setCurrentCharacterIndex = 'setCurrentCharacterIndex'
 }
 
 export const mutations: MutationTree<State> = {
-  [Mutations.addAudioOptions](state, audioOptions: AudioOption[] = []) {
-    state.audioOptions = audioOptions
+  [Mutations.addCharacterParameters](
+    state,
+    characterParameters: CharacterParameters[] = []
+  ) {
+    state.characterParameters = characterParameters
   },
   [Mutations.addDialogueTree](state, dialogueTree: DialogueTree = []) {
     state.dialogueTree = dialogueTree

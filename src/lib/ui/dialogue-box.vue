@@ -11,6 +11,7 @@
       src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAB4AAAAUAQMAAACgZR+HAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAZQTFRF////AAAAVcLTfgAAAAJ0Uk5T/wDltzBKAAAAGElEQVR4nGNgIAX8YGCowUr8P8D/BycBADYgGAGi2z2EAAAAAElFTkSuQmCC"
       alt=""
       class="continue-icon"
+      @click="onNextLine"
     />
   </div>
 </template>
@@ -80,10 +81,11 @@ export default defineComponent({
         if (!hasFinishedScrolling.value) {
           state.charCount++
           if (state.charCount % 3) {
-            const audioOptions = store.getters.currentCharacterAudioOptions
+            const characterParams =
+              store.getters.currentCharacterParameters
             state.oscillator.start({
-              frequency: audioOptions?.frequency,
-              type: audioOptions?.type
+              frequency: characterParams?.frequency,
+              type: characterParams?.type
             })
           }
         }

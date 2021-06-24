@@ -10,7 +10,7 @@ import { computed, defineComponent, onMounted, PropType } from 'vue'
 import DialogueBox from './dialogue-box.vue'
 import PixelizedBackground from './pixelized-background.vue'
 import { parseDialogueTree } from '../parse-dialogue-tree/parse-dialogue-tree'
-import { AudioOption } from '../models/audio-options'
+import { CharacterParameters } from '../models/character-parameters'
 import { useStore } from 'vuex'
 import { Mutations } from '../store/mutations'
 import { Store } from '../store'
@@ -22,8 +22,8 @@ export default defineComponent({
       type: String,
       required: true
     },
-    audioOptions: {
-      type: Array as PropType<AudioOption[]>,
+    characterParameters: {
+      type: Array as PropType<CharacterParameters[]>,
       default: () => []
     }
   },
@@ -31,10 +31,13 @@ export default defineComponent({
     const store: Store = useStore()
 
     onMounted(async () => {
-      const text = await fetch(`/assets/${props.scriptFile}`).then(
-        (response) => response.text()
+      const text = await fetch(props.scriptFile).then((response) =>
+        response.text()
       )
-      store.commit(Mutations.addAudioOptions, props.audioOptions)
+      store.commit(
+        Mutations.addCharacterParameters,
+        props.characterParameters
+      )
       store.commit(Mutations.addDialogueTree, parseDialogueTree(text))
     })
 
