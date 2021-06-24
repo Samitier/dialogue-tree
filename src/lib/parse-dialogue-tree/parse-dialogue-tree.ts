@@ -1,4 +1,4 @@
-import { DialogueTree } from './dialogue-tree.model'
+import { DialogueTree, defaultNodeId } from '../models/dialogue-tree'
 
 export function parseDialogueTree(rawText: string): DialogueTree {
   const splittedText = splitByEndline(rawText)
@@ -24,7 +24,7 @@ export function parseDialogueTree(rawText: string): DialogueTree {
         )
       } else
         dialogueTree.push({
-          id: '[INTRO]',
+          id: defaultNodeId,
           dialogue: [
             {
               character: statement,

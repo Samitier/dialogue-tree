@@ -10,3 +10,5 @@ export type CharacterLines = {
   character: string
   lines: string
 }
+
+export const defaultNodeId = '[INTRO]'

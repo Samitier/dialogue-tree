@@ -1,35 +1,19 @@
 <template>
-  <div class="container">
-    <dialogue-box
-      v-if="dialogueTree.length"
-      :dialogue-tree="dialogueTree"
-      :audio-options="[
-        { character: 'VINCENT', frequency: 450, type: 'sine' },
-        { character: 'JULES', frequency: 300, type: 'triangle' }
-      ]"
-    />
-  </div>
+  <rpgfy-it
+    script-file="dialogue2.txt"
+    :audio-options="[
+      { character: 'VINCENT', frequency: 450, type: 'sine' },
+      { character: 'JULES', frequency: 300, type: 'triangle' }
+    ]"
+  />
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
-import { DialogueTree } from './lib/parse-dialogue-tree/dialogue-tree.model'
-import { parseDialogueTree } from './lib/parse-dialogue-tree/parse-dialogue-tree'
-import DialogueBox from './lib/ui/dialogue-box.vue'
+import { defineComponent } from 'vue'
+import RpgfyIt from './lib/ui/rpgfy-it.vue'
 
 export default defineComponent({
-  components: { DialogueBox },
-  setup() {
-    const dialogueTree = ref<DialogueTree>([])
-    onMounted(async () => {
-      const text = await fetch('/assets/dialogue2.txt').then((response) =>
-        response.text()
-      )
-      dialogueTree.value = parseDialogueTree(text)
-      console.log(parseDialogueTree(text))
-    })
-    return { dialogueTree }
-  }
+  components: { RpgfyIt }
 })
 </script>
 
@@ -51,19 +35,5 @@ body,
   display: flex;
   align-items: center;
   justify-content: center;
-}
-</style>
-
-<style scoped>
-.container {
-  width: 100%;
-  height: 100%;
-  margin: 1rem;
-  position: relative;
-  max-width: 45rem;
-  max-height: 30rem;
-  border: 1px solid gray;
-  background-image: url('/pxArt.png');
-  background-size: contain;
 }
 </style>

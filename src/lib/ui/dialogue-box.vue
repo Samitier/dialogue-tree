@@ -4,7 +4,7 @@
       {{ currentCharacter }}
     </div>
     <div class="dialogue-box" @click="onNextLine">
-      {{ currentLines }}
+      {{ scrolledText }}
     </div>
     <img
       v-if="hasFinishedScrolling"
@@ -21,64 +21,30 @@ import {
   defineComponent,
   onMounted,
   onUnmounted,
-  PropType,
   reactive
 } from 'vue'
-import { DialogueTree } from '../parse-dialogue-tree/dialogue-tree.model'
+
+import { Store } from '../store'
 import { Oscillator } from '../oscillator/oscillator'
+import { useStore } from 'vuex'
+import { Mutations } from '../store/mutations'
 
 const textVelocity = 20
 const maxChars = 110
 
-type AudioOptions = {
-  character: string
-  frequency: number
-  type: 'sine' | 'triangle'
-}[]
-
 export default defineComponent({
-  props: {
-    dialogueTree: {
-      type: Object as PropType<DialogueTree>,
-      required: true
-    },
-    audioOptions: {
-      type: Object as PropType<AudioOptions>,
-      default() {
-        return [] as AudioOptions
-      }
-    }
-  },
-  setup(props) {
+  setup() {
     const state = reactive({
-      currentDialogueNodeId: '[INTRO]',
-      currentCharacterLineIndex: 0,
-      charCount: 0,
-      lineCount: 0,
       interval: 0,
-      oscillator: new Oscillator()
+      oscillator: new Oscillator(),
+      charCount: 0,
+      lineCount: 0
     })
-
-    const currentNode = computed(() =>
-      // Fixme: vue breaks when typing props
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (props as any).dialogueTree.find(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (d: any) => d.id === state.currentDialogueNodeId
-      )
-    )
-
-    const currentCharacterLine = computed(
-      () => currentNode.value?.dialogue[state.currentCharacterLineIndex]
-    )
-
-    const currentCharacter = computed(() =>
-      currentCharacterLine.value?.character.toLowerCase()
-    )
+    const store: Store = useStore()
 
     const splittedLines = computed(() => {
-      if (!currentCharacterLine.value) return
-      const lines = currentCharacterLine.value.lines
+      if (!store.getters.currentCharacterLines) return
+      const lines = store.getters.currentCharacterLines.lines
       const splittedLines = []
       let i = 0
       while (i < lines.length) {
@@ -91,7 +57,11 @@ export default defineComponent({
       return splittedLines
     })
 
-    const currentLines = computed(() => {
+    const currentCharacter = computed(
+      () => store.getters.currentCharacterLines?.character
+    )
+
+    const scrolledText = computed(() => {
       if (!splittedLines.value) return ''
       return splittedLines.value[state.lineCount].substring(
         0,
@@ -104,22 +74,18 @@ export default defineComponent({
       return state.charCount >= splittedLines.value[state.lineCount].length
     })
 
-    const currentCharacterAudioOptions = computed(() => {
-      if (!currentCharacter.value) return
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return (props as any).audioOptions.find(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (a: any) => a.character.toLowerCase() === currentCharacter.value
-      )
-    })
-
     onMounted(() => {
       state.interval = setInterval(() => {
         if (state.oscillator.isPlaying) state.oscillator.stop()
         if (!hasFinishedScrolling.value) {
           state.charCount++
           if (state.charCount % 3) {
-            state.oscillator.start(currentCharacterAudioOptions.value)
+            const audioOptions = store.getters.currentCharacterAudioOptions
+            console.log(audioOptions)
+            state.oscillator.start({
+              frequency: audioOptions?.frequency,
+              type: audioOptions?.type
+            })
           }
         }
       }, textVelocity)
@@ -127,29 +93,20 @@ export default defineComponent({
     onUnmounted(() => clearInterval(state.interval))
 
     function onNextLine() {
-      if (
-        !currentNode.value ||
-        !splittedLines.value ||
-        !hasFinishedScrolling.value
-      )
-        return
+      if (!splittedLines.value || !hasFinishedScrolling.value) return
       state.lineCount++
       state.charCount = 0
       if (state.lineCount === splittedLines.value.length) {
         state.lineCount = 0
-        state.currentCharacterLineIndex++
-        if (
-          state.currentCharacterLineIndex ===
-          currentNode.value.dialogue.length
-        ) {
-          state.currentDialogueNodeId = currentNode.value.continuesAt
-          state.currentCharacterLineIndex = 0
-        }
+        store.commit(
+          Mutations.setCurrentCharacterIndex,
+          store.state.currentCharacterLineIndex + 1
+        )
       }
     }
 
     return {
-      currentLines,
+      scrolledText,
       currentCharacter,
       onNextLine,
       hasFinishedScrolling
