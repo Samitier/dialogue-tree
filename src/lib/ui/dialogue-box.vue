@@ -45,7 +45,7 @@ export default defineComponent({
     const splittedLines = computed(() => {
       if (!store.getters.currentCharacterLines) return
       const lines = store.getters.currentCharacterLines.lines
-      const splittedLines = []
+      const splittedLines = [] as string[]
       let i = 0
       while (i < lines.length) {
         let splitIndex =
@@ -57,8 +57,8 @@ export default defineComponent({
       return splittedLines
     })
 
-    const currentCharacter = computed(
-      () => store.getters.currentCharacterLines?.character
+    const currentCharacter = computed(() =>
+      store.getters.currentCharacterLines?.character.toLowerCase()
     )
 
     const scrolledText = computed(() => {

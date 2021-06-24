@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <pixelized-background />
     <dialogue-box />
   </div>
 </template>
@@ -7,6 +8,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, PropType } from 'vue'
 import DialogueBox from './dialogue-box.vue'
+import PixelizedBackground from './pixelized-background.vue'
 import { parseDialogueTree } from '../parse-dialogue-tree/parse-dialogue-tree'
 import { AudioOption } from '../models/audio-options'
 import { useStore } from 'vuex'
@@ -14,7 +16,7 @@ import { Mutations } from '../store/mutations'
 import { Store } from '../store'
 
 export default defineComponent({
-  components: { DialogueBox },
+  components: { DialogueBox, PixelizedBackground },
   props: {
     scriptFile: {
       type: String,
@@ -41,14 +43,16 @@ export default defineComponent({
 
 <style scoped>
 .container {
-  width: 100%;
-  height: 100%;
   margin: 1rem;
   position: relative;
-  max-width: 45rem;
-  max-height: 30rem;
+  width: 45rem;
+  height: 30rem;
   border: 1px solid gray;
-  background-image: url('/pxArt.png');
-  background-size: contain;
+}
+
+@media (max-width: 45rem) {
+  .container {
+    transform: scale(0.5);
+  }
 }
 </style>
