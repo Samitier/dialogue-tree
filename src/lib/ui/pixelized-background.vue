@@ -25,7 +25,9 @@ export default defineComponent({
 
     const currentImageSrc = computed(() => {
       const images = store.getters.currentCharacterParameters?.portraits
-      if (images && images.length) return images[0]
+      const i = store.state.currentCharacterLineIndex
+      console.log(i, images?.length)
+      if (images && images.length) return images[i % images.length]
     })
 
     function onLoadImage() {

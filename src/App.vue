@@ -1,15 +1,6 @@
 <template>
-  <pulp />
+  <router-view />
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-import Pulp from './examples/pulp.vue'
-
-export default defineComponent({
-  components: { Pulp }
-})
-</script>
 
 <style>
 html,

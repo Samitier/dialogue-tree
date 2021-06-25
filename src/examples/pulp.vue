@@ -1,6 +1,6 @@
 <template>
   <rpgfy-it
-    script-file="/assets/pulp/burger.txt"
+    script-file="/assets/pulp/script.txt"
     :character-parameters="[
       {
         character: 'VINCENT',

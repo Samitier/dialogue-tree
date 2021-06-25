@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <pixelized-background />
-    <dialogue-box v-if="hasLines" />
+    <dialogue-box v-if="hasLines" :text-velocity="textVelocity" />
   </div>
 </template>
 
@@ -25,6 +25,11 @@ export default defineComponent({
     characterParameters: {
       type: Array as PropType<CharacterParameters[]>,
       default: () => []
+    },
+    textVelocity: {
+      // Fixme this should be more usable
+      type: Number,
+      default: 25
     }
   },
   setup(props) {

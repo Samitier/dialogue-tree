@@ -5,13 +5,19 @@ JULES
   What?
 
 VINCENT
-  It's the little differences. A lotta the same shit we got here, they got there, but there they're a little different.
+  It's the little differences.
+
+VINCENT
+  A lotta the same shit we got here, they got there, but there they're a little different.
 
 JULES
   Examples?
 
 VINCENT
-  Well, in Amsterdam, you can buy beer in a movie theatre. And I don't mean in a paper cup either. They give you a glass of beer, like in a bar. In Paris, you can buy beer at MacDonald's. Also, you know what they call a Quarter Pounder with Cheese in Paris?
+  Well, in Amsterdam, you can buy beer in a movie theatre. And I don't mean in a paper cup either. They give you a glass of beer, like in a bar. 
+
+VINCENT
+  In Paris, you can buy beer at MacDonald's. Also, you know what they call a Quarter Pounder with Cheese in Paris?
 
 JULES
   They don't call it a Quarter Pounder with Cheese?
@@ -35,7 +41,10 @@ JULES
   Le Big Mac... What do they call a Whopper?
 
 VINCENT
-  I dunno, I didn't go into a Burger King.  But you know what they put on french fries in Holland instead of ketchup?
+  I dunno, I didn't go into a Burger King.
+  
+VINCENT
+  But you know what they put on french fries in Holland instead of ketchup?
 
 JULES
   What?

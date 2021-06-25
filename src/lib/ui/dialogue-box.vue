@@ -30,11 +30,16 @@ import { Oscillator } from '../oscillator/oscillator'
 import { useStore } from 'vuex'
 import { Mutations } from '../store/mutations'
 
-const textVelocity = 20
 const maxChars = 110
 
 export default defineComponent({
-  setup() {
+  props: {
+    textVelocity: {
+      type: Number,
+      default: 25
+    }
+  },
+  setup(props) {
     const state = reactive({
       interval: 0,
       oscillator: new Oscillator(),
@@ -89,7 +94,7 @@ export default defineComponent({
             })
           }
         }
-      }, textVelocity)
+      }, props.textVelocity)
     })
     onUnmounted(() => clearInterval(state.interval))
 

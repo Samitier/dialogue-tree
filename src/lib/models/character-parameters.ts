@@ -1,6 +1,6 @@
 export type CharacterParameters = {
   character: string
   frequency: number
-  type: 'sine' | 'triangle'
+  type: OscillatorType
   portraits: string[]
 }
